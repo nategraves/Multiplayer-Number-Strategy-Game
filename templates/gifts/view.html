@@ -1,0 +1,59 @@
+{% extends 'base/base.html' %}
+
+{% block extra_css %}
+<link href='/static/css/gifts/view.css' rel='stylesheet' type='text/stylesheet'/>
+{% endblock %}
+
+{% block extra_js %}
+<script type='text/javascript'>
+
+var horizontal = false;
+var vertical = false;
+
+$(function(){
+
+	$('#vertical-ribbon').click(function() {
+		$('#vertical-ribbon').animate({
+			top: '+=2000'
+		}, 1000, function(){
+			vertical = true;
+			checkUnwrapped();
+		});
+	});
+
+	$('#horizontal-ribbon').click(function() {
+		$('#horizontal-ribbon').animate({
+			left: '+=2000'
+		}, 1000, function() {
+			horizontal = true;
+			checkUnwrapped();
+		});
+	});
+});
+
+function checkUnwrapped() {
+	if(vertical && horizontal) {
+		$('.card').hide(10, function() {
+			$('body, html').css('background', 'none');
+			$('.framed').show();
+		});
+	}
+}
+</script>
+{% endblock %}
+
+{% block frame %}
+<div class='arrow-up'>&nbsp;</div>
+<div class='card'>
+	<p>To: {{ gift.gift_to }}</p>
+	<p>From: {{ gift.gift_from }}</p>
+	<p>Message from {{ gift.gift_from }}: {{ gift.message }}</p>
+</div>
+<div class='wrapped'>
+	<span id='horizontal-ribbon'>&nbsp;</span>
+	<span id='vertical-ribbon'>&nbsp;</span>
+</div>
+<div class='framed'>
+	<iframe src='{{ gift.url }}'></iframe>
+</div>
+{% endblock %}

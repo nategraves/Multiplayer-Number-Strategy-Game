@@ -1,0 +1,45 @@
+<!doctype html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title>giftalink | gift wrap your url</title>
+	<meta name="description" content="">
+
+	<meta name="viewport" content="width=device-width">
+	<link rel="stylesheet" href="/static/css/style.css">
+	<link rel="stylesheet" href="/static/bootstrap/css/bootstrap.css">
+	{% block extra_css %}{% endblock %}
+
+	<script src="/static/js/modernizr-2.5.2.min.js"></script>
+	<script src="/static/js/jquery-1.7.1.min.js"></script>
+	{% block extra_js %}{% endblock %}
+</head>
+<body>
+	<header>
+		{% block header %}{% endblock %}
+	</header>
+	<div role="main" class='container'>
+		<div class='row'>
+		{% block main %}{% endblock %}
+		</div>
+	</div>
+	{% block frame %}{% endblock %}
+	<footer>
+		{% block footer %}{% endblock %}
+	</footer>
+
+
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+	<script>window.jQuery || document.write('<script src="/js/jquery-1.7.1.min.js"><\/script>')</script>
+
+	<script src="/static/js/plugins.js"></script>
+	<script src="/static/js/script.js"></script>
+
+	<script>
+	var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
+	(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+	g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+	s.parentNode.insertBefore(g,s)}(document,'script'));
+	</script>
+</body>
+</html>

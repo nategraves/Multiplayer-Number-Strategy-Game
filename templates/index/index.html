@@ -1,0 +1,38 @@
+{% extends 'base/base.html' %}
+
+{% block main %}
+<div class='span4'>
+	<h1>Index</h1>
+	<form action='' method='POST' class='form-vertical'>
+		<fieldset>
+			<div class='control-group'>
+				<label class='control-label'>For whom is this gift?</label>
+				<div class='controls'>
+					{{ form.gift_to }}
+				</div>
+			</div>
+			<div class='control-group'>
+				<label class='control-label'>Whom shall we say this is from?</label>
+				<div class='controls'>
+					{{ form.gift_from }}
+				</div>
+			</div>
+			<div class='control-group'>
+				<label class='control-label'>What is the link of your gift?</label>
+				<div class='controls'>
+					{{ form.url }}
+				</div>
+			</div>
+			<div class='control-group'>
+				<label class='control-label'>Would you care to add a message?</label>
+				<div class='controls'>
+					{{ form.message }}
+				</div>
+			</div>
+		</fieldset>
+		<hr>
+		<input type='submit' value='Submit' class='btn'/>
+		{% csrf_token %}
+	</form>
+</div>
+{% endblock %}

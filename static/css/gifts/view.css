@@ -1,0 +1,64 @@
+body, html {
+	height: 100%;
+	overflow: hidden;
+	background: url('/static/images/blu_stripes.png') repeat;
+}
+
+iframe {
+	width: 100%;
+	height: 550px;
+	border: none;
+	overflow: hidden;
+}
+
+.card {
+	background: #E0E0E0;
+	position: absolute;
+	left: 20px;
+	top: 20px;
+	padding: 20px;
+	border-left: 1px solid #9A9A9A;
+	border-right: 1px solid #9A9A9A;
+	border-top: 1px solid #C2C2C2;
+	border-bottom: 1px solid #C2C2C2;
+	border-top-right-radius: 5px;
+	border-bottom-right-radius: 5px;
+	border-bottom-left-radius: 5px;
+	box-shadow: inset 0px 4px 4px -3px #FFF;
+}
+
+#vertical-ribbon {
+	position: absolute;
+	left: 50%;
+	top: 0;
+	width: 40px;
+	height: 100%;
+	margin-left: -20px;
+	background: #FF0000;
+	border-left: #8B0000 2px solid;
+	border-right: #8B0000 2px solid;
+	z-index: 1000;
+	box-shadow: inset 0 0 5px #EFEFEF;
+	-moz-box-shadow: inset 0 0 5px #EFEFEF;
+	-webkit-box-shadow: inset 0 0 5px #EFEFEF;
+}
+
+#horizontal-ribbon {
+	position: absolute;
+	left: 0;
+	top: 50%;
+	width: 100%;
+	height: 40px;
+	margin-top: -20px;
+	background: #FF0000;
+	border-top: #8B0000 2px solid;
+	border-bottom: #8B0000 2px solid;
+	z-index: 999;
+	box-shadow: inset 0 0 5px #EFEFEF;
+	-moz-box-shadow: inset 0 0 5px #EFEFEF;
+	-webkit-box-shadow: inset 0 0 5px #EFEFEF;
+}
+
+.framed {
+	display: none;
+}
