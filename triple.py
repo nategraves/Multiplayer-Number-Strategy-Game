@@ -1,6 +1,16 @@
-from models import Player, Board, Tile	
+from test import Board, Tile#,Player
 
+def playTurn(board, response):
+	x = int(response.partition(',')[2])
+	y = int(response.partition(',')[0])
+	print("Value at turn: %s" % board[x][y])
+
+	#Can't play on an occupied tile
 	
+	accepted = checkOccupied(board, x, y)
+	board = checkTouching(board, x, y)
+	
+	return accepted,board
 
 def playGame(board, players):
 	turn = 0
@@ -16,13 +26,21 @@ def playGame(board, players):
 				print("That spot is already taken")
 		turn += 1
 
-print("\r\nBoard: ")
-board = Board(5,5)
-board.playSpot(0,0)
-board.playSpot(1,0)
-print(board.tiles[0][0].touching)
-print(board.tiles[1][0].touching)
-board.printBoard()
+
+board = Board()
+board.tiles[2].increment()
+board.tiles[5].increment()
+board.tiles[10].increment()
+board.tiles[14].increment()
+board.print_board()
+board.increment(6)
+nodes = board.get_nodes(6)
+
+#board = Board(5,10)
+#board.printBoard()
+#board.tiles[0][0].increment()
+#board.printBoard()
+
 
 #print("Player 1")
 #player1 = Player()
