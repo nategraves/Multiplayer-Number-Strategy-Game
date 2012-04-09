@@ -36,22 +36,23 @@ class Board():
 			if (each.id + 1) % 4 == 0:
 				print('')
 
-	def get_nodes(self, start, nodes=[]):
-		nodes = nodes + [start]
-		if not self.graph.has_key(start):
-			return None
-		for node in self.graph[start]:
-			print("Working on %s.................." % node)
-			print("Nodes: %s" % self.graph[start])
- 			if node not in nodes:
- 				print("%s not in %s" % (node, nodes))
-				if self.tiles[node].value == self.tiles[start].value:
-					newpath = self.get_nodes(node, nodes)
-					if newpath: return newpath
+	def get_nodes(self, current, nodes=[]):
+		nodes = nodes + [current]
+		for each in self.graph[current]:
+			print('Current node: %s' % each)
+			if each not in nodes:
+				#print("%s not in nodes" % each)
+				if self.value(each) == self.value(current):
+					print("nodes before call %s " % nodes)
+ 					newpath = self.get_nodes(each, nodes)
+					if newpath: nodes = nodes + newpath
 		return nodes
 
 	def increment(self, tile):
 		self.tiles[tile].value += 1
+
+	def value(self, tile):
+		return self.tiles[tile].value
 
 
 class Tile():
