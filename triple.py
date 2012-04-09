@@ -26,21 +26,14 @@ def playGame(board, players):
 				print("That spot is already taken")
 		turn += 1
 
-
-def uniqify(seq):
-    seen = set()
-    seen_add = seen.add
-    return [ x for x in seq if x not in seen and not seen_add(x)]
-
 board = Board()
-board.tiles[2].increment()
-board.tiles[5].increment()
-board.tiles[10].increment()
-board.tiles[14].increment()
+
 board.print_board()
-board.increment(6)
-nodes = uniqify(board.get_nodes(6))
-print(nodes)
+board.play_tile(1)
+board.play_tile(2)
+board.play_tile(3)
+#board.increment(11)
+#nodes = uniqify(board.get_nodes(11))
 #board = Board(5,10)
 #board.printBoard()
 #board.tiles[0][0].increment()

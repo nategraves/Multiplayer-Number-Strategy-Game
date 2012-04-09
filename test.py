@@ -3,6 +3,11 @@
 # 08,09,10,11
 # 12,13,14,15
 
+def uniqify(seq):
+    seen = set()
+    seen_add = seen.add
+    return [ x for x in seq if x not in seen and not seen_add(x)]
+
 class Board():
 	
 	graph = {
@@ -31,19 +36,18 @@ class Board():
 			self.tiles.append(Tile(each))
 
 	def print_board(self):
+		response = ""
 		for each in self.tiles:
-			print("%s" % (each.id))
+			response += "%s " % each.value
 			if (each.id + 1) % 4 == 0:
-				print('')
+				response += "\r\n"
+		print(response)
 
 	def get_nodes(self, current, nodes=[]):
 		nodes = nodes + [current]
 		for each in self.graph[current]:
-			print('Current node: %s' % each)
 			if each not in nodes:
-				#print("%s not in nodes" % each)
 				if self.value(each) == self.value(current):
-					print("nodes before call %s " % nodes)
  					newpath = self.get_nodes(each, nodes)
 					if newpath: nodes = nodes + newpath
 		return nodes
@@ -54,6 +58,22 @@ class Board():
 	def value(self, tile):
 		return self.tiles[tile].value
 
+	def set_value(self, tile, value):
+		self.tiles[tile].value = value
+
+	def play_tile(self, tile):
+		self.tiles[tile].value += 1
+		nodes = uniqify(self.get_nodes(tile))
+		if len(nodes) > 2:
+			print("played: %s" % tile)
+			for i in range(len(nodes)):
+				if i == 0:
+					self.increment(nodes[i])
+				else:
+					self.set_value(nodes[i], 0)
+		else:
+			print("played: %s" % tile)
+		self.print_board()
 
 class Tile():
 	
