@@ -61,19 +61,24 @@ class Board():
 	def set_value(self, tile, value):
 		self.tiles[tile].value = value
 
-	def play_tile(self, tile):
-		self.tiles[tile].value += 1
+	def play_tile(self, tile, increment=False):
+		if increment:
+			self.tiles[tile].value += 1
 		nodes = self.get_nodes(tile)
 		if len(nodes) > 2:
-			print("played: %s" % tile)
+			if increment:
+				print("Played tile %s" % tile)
 			for i in range(len(nodes)):
 				if i == 0:
 					self.increment(nodes[i])
 				else:
 					self.set_value(nodes[i], 0)
+			self.play_tile(nodes[0])
 		else:
-			print("played: %s" % tile)
-		self.print_board()
+			if increment:
+				print("Played tile %s" % tile)
+		if increment:
+			self.print_board()
 
 class Tile():
 	
