@@ -1,38 +1,33 @@
+import sys
 from company import Board, Tile, Player
 
-def playTurn(board, response):
-	x = int(response.partition(',')[2])
-	y = int(response.partition(',')[0])
-	print("Value at turn: %s" % board[x][y])
-
-	#Can't play on an occupied tile
-	
-	accepted = checkOccupied(board, x, y)
-	board = checkTouching(board, x, y)
-	
-	return accepted,board
-
-def playGame(board, players):
+def main():
+	players = [Player(), Player()]
+	board = Board(players)
 	turn = 0
 	game = True
-	while game:
-		
-		accepted = True
-		while accepted:
-			printBoard(board)
-			response = raw_input("%s's Turn (Enter play as x,y): " % players[turn][0])
-			accepted,board = playTurn(board,response)
-			if not accepted:
-				print("That spot is already taken")
+	while turn < 15:
+		played = False
+		while not played:
+			try:
+				tile = int(raw_input("What tile do you want to play, %s (0-15)?\r\n" % board.players[turn % 2].name))
+			except ValueError:
+				print "Please enter a valid number"
+			played = board.play_tile(tile, board.players[turn % 2], True)
 		turn += 1
+	print("Game over!")
+	sys.exit()
 
-board = Board()
+main()
+
+'''
+Some optional code to run to test stuff.
 
 board.print_board()
 
 #Get a 2 in the top right
 board.play_tile(1, True)
-board.play_tile(2, True)
+board.play_tile(1, True)
 board.play_tile(3, True)
 
 #Get a two to the left
@@ -66,3 +61,4 @@ board.play_tile(9, True)
 board.play_tile(0, True)
 board.play_tile(4, True)
 board.play_tile(5, True)
+'''
