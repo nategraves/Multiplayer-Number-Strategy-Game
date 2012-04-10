@@ -1,4 +1,4 @@
-from test import Board, Tile#,Player
+from company import Board, Tile, Player
 
 def playTurn(board, response):
 	x = int(response.partition(',')[2])

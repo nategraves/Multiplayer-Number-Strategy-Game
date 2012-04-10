@@ -88,9 +88,3 @@ class Tile():
 
 	def increment(self):
 		self.value += 1
-
-class Player():
-
-	def __init__(self):
-		self.points = 0
-		self.name = raw_input("Name: ")
