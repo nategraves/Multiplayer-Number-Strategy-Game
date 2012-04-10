@@ -29,18 +29,18 @@ def playGame(board, players):
 board = Board()
 
 board.print_board()
+
+#Get a 2 in the top right
 board.play_tile(1)
 board.play_tile(2)
 board.play_tile(3)
-#board.increment(11)
-#nodes = uniqify(board.get_nodes(11))
-#board = Board(5,10)
-#board.printBoard()
-#board.tiles[0][0].increment()
-#board.printBoard()
 
+#Get a two to the left
+board.play_tile(1)
+board.play_tile(6)
+board.play_tile(2)
 
-#print("Player 1")
-#player1 = Player()
-
-#playGame(board, players)
+#Get a two below the corner spot
+board.play_tile(6)
+board.play_tile(11)
+board.play_tile(7)

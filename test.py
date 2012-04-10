@@ -50,7 +50,7 @@ class Board():
 				if self.value(each) == self.value(current):
  					newpath = self.get_nodes(each, nodes)
 					if newpath: nodes = nodes + newpath
-		return nodes
+		return uniqify(nodes)
 
 	def increment(self, tile):
 		self.tiles[tile].value += 1
@@ -63,7 +63,7 @@ class Board():
 
 	def play_tile(self, tile):
 		self.tiles[tile].value += 1
-		nodes = uniqify(self.get_nodes(tile))
+		nodes = self.get_nodes(tile)
 		if len(nodes) > 2:
 			print("played: %s" % tile)
 			for i in range(len(nodes)):
