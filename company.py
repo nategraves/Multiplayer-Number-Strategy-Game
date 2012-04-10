@@ -74,7 +74,7 @@ class Board():
 		nodes = self.get_nodes(tile)
 
 		if len(nodes) > 2:
-			player.points += (len(nodes) * self.get_value(nodes[0]))
+			player.points += (len(nodes) * (self.get_value(nodes[0]) - 1))
 			if increment:
 				print("Played tile %s" % tile)
 			for i in range(len(nodes)):

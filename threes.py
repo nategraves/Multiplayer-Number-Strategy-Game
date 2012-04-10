@@ -11,9 +11,9 @@ def main():
 		while not played:
 			try:
 				tile = int(raw_input("What tile do you want to play, %s (0-15)?\r\n" % board.players[turn % 2].name))
+				played = board.play_tile(tile, board.players[turn % 2], True)
 			except ValueError:
 				print "Please enter a valid number"
-			played = board.play_tile(tile, board.players[turn % 2], True)
 		turn += 1
 	print("Game over!")
 	sys.exit()
@@ -27,7 +27,7 @@ board.print_board()
 
 #Get a 2 in the top right
 board.play_tile(1, True)
-board.play_tile(1, True)
+board.play_tile(2, True)
 board.play_tile(3, True)
 
 #Get a two to the left
