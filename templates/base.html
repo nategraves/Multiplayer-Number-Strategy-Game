@@ -1,0 +1,19 @@
+<!doctype html>
+<html>
+<head>
+	<title>{% block title%} Three's Company {% endblock %}</title>
+	
+	<link href="{{ url_for('static', filename='bootstrap/css/bootstrap.css') }}" rel="stylesheet">
+	<link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
+	{% block extra_css %}{% endblock %}
+	{% block extra_js %}{% endblock %}
+</head>
+<body>
+	<div class='container'>
+		{% block body %}
+			<div class='row'>	
+				<h1>Welcome to Three's Company, a multiplayer number strategy game.</h1>
+			</div>
+		{% endblock %}
+	</div>
+</body>

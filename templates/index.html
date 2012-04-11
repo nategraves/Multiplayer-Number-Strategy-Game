@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block extra_css %}
+	<link href="{{ url_for('static', filename='index.css') }}" rel="stylesheet">
+{% endblock %}
+
+
+{% block body %}
+<div class='row'>
+	<div class='span4'>
+		<h1>Three's Company</h1>
+		<h2>A tricky tile game to play with friends.<h2>
+	</div>
+	<div class='span4 offset2'>
+		<img src='http://placekitten.com/300/300'/>
+		<a href='/new' class='btn btn-info btn-large'>Start a new game</a>
+	</div>
+{% endblock %}
