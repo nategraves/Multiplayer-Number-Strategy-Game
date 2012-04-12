@@ -6,6 +6,8 @@ from company import *
 
 app = Flask(__name__)
 
+_board = None
+
 @app.route('/')
 def index():
 	return render_template('index.html')
@@ -14,15 +16,18 @@ def index():
 def new_game():
 	error = None
 	if request.method == 'POST':
-		print(request.data)
 		try: 
-			width = request.form['width']
+			players = [Player(request.form['player1']), Player(request.form['player2'])]
+			try:
+				height = int(request.form['height'])
+				width = int(request.form['width'])
+			except ValueError:
+				print("Bad value")
+			board = Board(players, width, height)
+			board.print_board()
 		except KeyError:
 			print("Bad")
-		#height = request.form['height']
-		#player1 = request.form['player1']
-		#player2 = request.form['player2']
-		#print(width, height, player1, player2)
+
 		return render_template('game.html')
 	else:
 		error = 'Wrong'

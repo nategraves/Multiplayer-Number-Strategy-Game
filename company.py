@@ -99,7 +99,10 @@ class Tile():
 
 class Player():
 
-	def __init__(self):
+	def __init__(self, name=None):
 		self.points = 0
-		self.name = raw_input("Enter this player's name: \r\n")
+		if name:
+			self.name = name
+		else:
+			self.name = raw_input("Enter this player's name: \r\n")
 
