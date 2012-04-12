@@ -32,18 +32,3 @@ a.tile {
     background: #FF0000;
     color: #FFF;
 }
-
-.top {
-    -webkit-transform: rotate(-45deg) skew(15deg, 15deg);
-    -moz-transform: rotate(-45deg) skew(15deg, 15deg);
-}
-
-.left {
-    -webkit-transform: rotate(15deg) skew(15deg, 15deg);
-    -moz-transform: rotate(15deg) skew(15deg, 15deg);
-}
-
-.left {
-    -webkit-transform: rotate(-15deg) skew(-15deg, -15deg);
-    -moz-transform: rotate(-15deg) skew(-15deg, -15deg);
-}

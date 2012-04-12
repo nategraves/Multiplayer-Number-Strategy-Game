@@ -10,37 +10,34 @@ def uniqify(seq):
 
 class Board():
 	
-	graph = {
-		0: [1,4],
-		1: [0,2,5],
-		2: [1,3,6],
-		3: [2,7],
-		4: [0,5,8],
-		5: [1,4,6,9],
-		6: [2,5,7,10],
-		7: [3,6,11],
-		8: [4,9,12],
-		9: [5,8,10,13],
-		10: [6,9,11,14],
-		11: [7,10,15],
-		12: [8,13],
-		13: [9,12,14],
-		14: [10,13,15],
-		15: [11,14],
-	}
-
 	tiles = []
 
-	def __init__(self, players):
+	def __init__(self, players, width=4, height=4):
 		self.players = players
-		for each in range(0,16):
-			self.tiles.append(Tile(each))
+		self.width = width
+		self.height = height
+		self.total_tiles = self.width * self.height
+
+		for i in range(self.total_tiles):
+			graph = []
+			if (i + 1) < (self.total_tiles - 1):
+				graph.append(i + 1)
+			if (i - 1) >= 0:
+				graph.append(i - 1)
+			if (i + width) < (self.total_tiles - 1):
+				graph.append(i + width)
+			if (i - width) >= 0:
+				graph.append(i - width)
+			self.tiles.append({ 
+				'value': 0,
+				'graph': graph,
+			})	
 
 	def print_board(self):
-		response = ""
-		for each in self.tiles:
-			response += "%s " % each.value
-			if (each.id + 1) % 4 == 0:
+		response = "\r\nBoard:\r\n"
+		for (counter, each) in enumerate(self.tiles):
+			response += "%s " % each['value']
+			if (counter + 1) % self.width == 0:
 				response += "\r\n"
 		print(response)
 		print("%s: %s points | %s: %s points" % 
@@ -48,7 +45,7 @@ class Board():
 
 	def get_nodes(self, current, nodes=[]):
 		nodes = nodes + [current]
-		for each in self.graph[current]:
+		for each in self.tiles[current]['graph']:
 			if each not in nodes:
 				if self.get_value(each) == self.get_value(current):
  					newpath = self.get_nodes(each, nodes)
@@ -56,13 +53,14 @@ class Board():
 		return uniqify(nodes)
 
 	def increment(self, tile):
-		self.tiles[tile].value += 1
+		self.tiles[tile]['value'] += 1
+		print("Increment %s" % self.tiles[tile]['value'])
 
 	def get_value(self, tile):
-		return self.tiles[int(tile)].value
+		return self.tiles[int(tile)]['value']
 
 	def set_value(self, tile, value):
-		self.tiles[tile].value = value
+		self.tiles[tile]['value'] = value
 
 	def play_tile(self, tile, player, increment=False):
 		if self.get_value(tile) > 0 and increment:
@@ -70,9 +68,8 @@ class Board():
 			return False
 
 		if increment:
-			self.tiles[tile].value += 1
+			self.increment(tile)
 		nodes = self.get_nodes(tile)
-
 		if len(nodes) > 2:
 			player.points += (len(nodes) * self.get_value(nodes[0]))
 			if increment:
