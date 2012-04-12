@@ -12,7 +12,23 @@
 		<h2>A tricky tile game to play with friends.<h2>
 	</div>
 	<div class='span4 offset2'>
-		<img src='http://placekitten.com/300/300'/>
-		<a href='/new' class='btn btn-info btn-large'>Start a new game</a>
+		<form action='/new' method='POST' class='form-vertical'>
+			<fieldset>
+				<div class='control-group'>
+					<label class='control-label' for='player1'>Player One:</label>
+					<input type='text' class='input-large' name='player1'>
+					<label class='control-label' for='player2'>Player Two:</label>
+					<input type='text' class='input-large' name='player2'>
+				</div>
+				<div class='control-group'>
+					<label class='control-label' for='width'>Board Width:</label>
+					<input type='text' class='input-small' name='width'>
+					<label class='control-label' for='height'>Board Height:</label>
+					<input type='text' class='input-small' name='height'>
+					<br class='clear'/>
+					<input type='submit' class='btn btn-info' value="Start a new game">
+				</div>
+			</fieldset>
+		<form>
 	</div>
 {% endblock %}
