@@ -6,7 +6,7 @@ def main():
 	board = Board(players)
 	turn = 0
 	game = True
-	while turn < 15:
+	while turn < 50:
 		played = False
 		while not played:
 			try:

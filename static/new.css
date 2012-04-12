@@ -1,0 +1,49 @@
+.clear {
+    clear: both;
+}
+
+#board { 
+    background: #CCC;
+    margin-bottom: 30px;
+    padding: 5px 0 5px 10px;
+}
+
+a.tile {
+    width: 50px;
+    height: 50px;
+    border: 1px solid #CCC;
+    margin: 10px;
+    float: left;
+    text-align: center;
+    font-size: 18px;
+    line-height: 50px;
+    border-radius: 4px;
+    display: block;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.empty {
+    background: #EEE;
+    color: #000;
+}
+
+.taken {
+    background: #FF0000;
+    color: #FFF;
+}
+
+.top {
+    -webkit-transform: rotate(-45deg) skew(15deg, 15deg);
+    -moz-transform: rotate(-45deg) skew(15deg, 15deg);
+}
+
+.left {
+    -webkit-transform: rotate(15deg) skew(15deg, 15deg);
+    -moz-transform: rotate(15deg) skew(15deg, 15deg);
+}
+
+.left {
+    -webkit-transform: rotate(-15deg) skew(-15deg, -15deg);
+    -moz-transform: rotate(-15deg) skew(-15deg, -15deg);
+}

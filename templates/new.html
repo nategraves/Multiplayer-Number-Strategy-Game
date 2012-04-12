@@ -1,13 +1,47 @@
 {% extends 'base.html' %}
 
 {% block extra_css %}
-	<link href="{{ url_for('static', filename='index.css') }}" rel="stylesheet">
+	<link href="{{ url_for('static', filename='new.css') }}" rel="stylesheet">
 {% endblock %}
 
-{% block main %}
+{% block extra_js %}
+	<script src="{{ url_for('static', filename='new.js') }}" type='text/javascript'></script>
+{% endblock %}
+
+{% block body %}
 <div class='row'>
-	<div class='span4'>
-		<h1>Create a new game</h1>
+	<div class='span5'>
+        <div id='board'> 
+            <a class='tile empty'>0</a>
+            <a class='tile empty'>0</a>
+            <a class='tile empty'>0</a>
+            <a class='tile empty'>0</a>
+            <a class='tile empty'>0</a>
+            <a class='tile empty'>0</a>
+            <a class='tile empty'>0</a>
+            <a class='tile empty'>0</a>
+            <a class='tile empty'>0</a>
+            <a class='tile empty'>0</a>
+            <a class='tile empty'>0</a>
+            <a class='tile empty'>0</a>
+            <a class='tile empty'>0</a>
+            <a class='tile empty'>0</a>
+            <a class='tile empty'>0</a>
+            <a class='tile empty'>0</a>
+            <a class='tile empty'>0</a>
+            <a class='tile empty'>0</a>
+            <a class='tile empty'>0</a>
+            <a class='tile empty'>0</a>
+            <a class='tile empty'>0</a>
+            <a class='tile empty'>0</a>
+            <a class='tile empty'>0</a>
+            <a class='tile empty'>0</a>
+            <a class='tile empty'>0</a>
+            <br class='clear'/>
+        </div>
 	</div>
+    <div class='span3 offset1'>
+        <h3>Score:</h3>
+    </div>
 </div>
 {% endblock %}
