@@ -12,8 +12,7 @@ class Board():
 	
 	tiles = []
 
-	def __init__(self, players, width=4, height=4):
-		self.players = players
+	def __init__(self, width=20, height=20):
 		self.width = width
 		self.height = height
 		self.total_tiles = self.width * self.height
@@ -40,8 +39,9 @@ class Board():
 			if (counter + 1) % self.width == 0:
 				response += "\r\n"
 		print(response)
-		print("%s: %s points | %s: %s points" % 
-			(self.players[0].name, self.players[0].points, self.players[1].name, self.players[1].points))
+		if len(self.players) > 1:
+			print("%s: %s points | %s: %s points" % 
+				(self.players[0].name, self.players[0].points, self.players[1].name, self.players[1].points))
 
 	def get_nodes(self, current, nodes=[]):
 		nodes = nodes + [current]
@@ -87,6 +87,13 @@ class Board():
 			self.print_board()
 
 		return True
+
+		@property
+		def serialize(self):
+			return {
+				'player': self.players,
+				'tiles': self.tiles
+			}
 
 class Tile():
 	
