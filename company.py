@@ -3,6 +3,8 @@
 # 08,09,10,11
 # 12,13,14,15
 
+import json
+
 def uniqify(seq):
     seen = set()
     seen_add = seen.add
@@ -12,7 +14,8 @@ class Board():
 	
 	tiles = []
 
-	def __init__(self, width=20, height=20):
+	def __init__(self, players, width=20, height=20):
+		self.players = players
 		self.width = width
 		self.height = height
 		self.total_tiles = self.width * self.height
@@ -42,6 +45,16 @@ class Board():
 		if len(self.players) > 1:
 			print("%s: %s points | %s: %s points" % 
 				(self.players[0].name, self.players[0].points, self.players[1].name, self.players[1].points))
+
+	def serialize_board(self):
+		json_board = '["tiles":{'
+		for i in range(self.total_tiles):
+			#if i % (self.width - 1):
+			json_board += '%s' % self.tiles[i]
+			if i == (self.total_tiles - 1):
+				json_board += '},"players":' #Need to add players here
+		print(json_board)
+		#print(json.loads(json_board))
 
 	def get_nodes(self, current, nodes=[]):
 		nodes = nodes + [current]
@@ -85,15 +98,9 @@ class Board():
 				print("Played tile %s" % tile)
 		if increment:
 			self.print_board()
+			self.serialize_board()
 
 		return True
-
-		@property
-		def serialize(self):
-			return {
-				'player': self.players,
-				'tiles': self.tiles
-			}
 
 class Tile():
 	
