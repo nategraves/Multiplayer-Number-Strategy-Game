@@ -22,6 +22,7 @@ class Board():
 		self.width = width
 		self.height = height
 		self.total_tiles = self.width * self.height
+		self.turn = 0
 
 		for i in range(self.total_tiles):
 			graph = []
@@ -82,7 +83,7 @@ class Board():
 			self.increment(tile)
 		nodes = self.get_nodes(tile)
 		if len(nodes) > 2:
-			player.points += (len(nodes) * self.get_value(nodes[0]))
+			self.players[self.turn % 2].points += (len(nodes) * self.get_value(nodes[0]))
 			if increment:
 				print("Played tile %s" % tile)
 			for i in range(len(nodes)):
@@ -98,6 +99,7 @@ class Board():
 			self.print_board()
 			self.serialize_board()
 
+		print("Turn: %s" % self.turn)
 		return True
 
 class Tile():

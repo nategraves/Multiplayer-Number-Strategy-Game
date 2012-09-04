@@ -7,12 +7,27 @@
 </head>
 <body>
 <div class='container'>
-{% for tile in tiles %}
-	{% if loop.index0 % width == 0 %}
-		<br class='clear' />
-	{% endif %}
-	<a href='/play/{{ loop.index0 }}/' class='tiles'>{{ tile.value }}</a>
-{% endfor %}
+	<div class='row'>
+		<div class='span4'>
+			{% if board.turn % 2 == 1 %}
+				<h3>Player 1's turn</h3>
+			{% else %}
+				<h3>Player 2's turn</h3>
+			{% endif %}
+
+			{% for tile in board.tiles %}
+				{% if loop.index0 % width == 0 %}
+					<br class='clear' />
+				{% endif %}
+				<a href='/play/{{ loop.index0 }}/' class='tiles'>{{ tile.value }}</a>
+			{% endfor %}
+		</div>
+		<div class='span4'>
+			<h4>Player 1: {{ board.players[0].points }}</h4>
+			<h4>Player 2: {{ board.players[1].points }}</h4>
+		</div>
+	</div>
+	<div 
 </div>
 </body>
 </html>

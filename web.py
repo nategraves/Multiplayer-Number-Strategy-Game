@@ -44,11 +44,12 @@ def play():
 	return render_template('board.html', width=_board.width, height=_board.height, tiles=_board.tiles )
 
 @app.route('/play/<tile>/')
-def play(tile=False):
+def play_web_tile(tile=False):
 	if(tile):
-		print(tile)
+		_board.turn += 1
 		_board.play_tile(int(tile), _board.players[0])
-	return render_template('board.html', width=_board.width, height=_board.height, tiles=_board.tiles )
+		print("Turn: %s" % _board.turn)
+	return render_template('board.html', width=_board.width, height=_board.height, board=_board)
 
 
 if __name__ == '__main__':
