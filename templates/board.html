@@ -1,0 +1,18 @@
+<!DOCTYPE>
+<html>
+<head>
+<link href="{{ url_for('static', filename='bootstrap/css/bootstrap.css') }}" rel='stylesheet'>
+<link href="{{ url_for('static', filename='style.css') }}" rel='stylesheet'>
+<link href="{{ url_for('static', filename='board.css') }}" rel='stylesheet'>
+</head>
+<body>
+<div class='container'>
+{% for tile in tiles %}
+	{% if loop.index0 % width == 0 %}
+		<br class='clear' />
+	{% endif %}
+	<a href='/play/{{ loop.index0 }}/' class='tiles'>{{ tile.value }}</a>
+{% endfor %}
+</div>
+</body>
+</html>

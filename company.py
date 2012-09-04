@@ -14,8 +14,11 @@ class Board():
 	
 	tiles = []
 
-	def __init__(self, players, width=20, height=20):
-		self.players = players
+	def __init__(self, players=False, width=5, height=5):
+		if not players:
+			players = {"players": [Player('Player 1'), Player('Player 2')]} 
+		else: 
+			self.players = players
 		self.width = width
 		self.height = height
 		self.total_tiles = self.width * self.height
@@ -47,13 +50,8 @@ class Board():
 				(self.players[0].name, self.players[0].points, self.players[1].name, self.players[1].points))
 
 	def serialize_board(self):
-		json_board = '["tiles":{'
-		for i in range(self.total_tiles):
-			#if i % (self.width - 1):
-			json_board += '%s' % self.tiles[i]
-			if i == (self.total_tiles - 1):
-				json_board += '},"players":' #Need to add players here
-		print(json_board)
+		#json_board = json.loads('%s' % self.tiles)
+		print("%s" % self.tiles)
 		#print(json.loads(json_board))
 
 	def get_nodes(self, current, nodes=[]):
