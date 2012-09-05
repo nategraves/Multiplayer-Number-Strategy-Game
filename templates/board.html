@@ -8,23 +8,20 @@
 <body>
 <div class='container'>
 	<div class='row'>
-		<div class='span3'>
-			{% if board.turn % 2 == 1 %}
-				<h3>Player 1's turn</h3>
-			{% else %}
-				<h3>Player 2's turn</h3>
-			{% endif %}
+		<div class='span{{ board.width }}'>
+			{% if last_played %}<span>Last tile played: {{ board.last_tile }}</span>{% endif %}
+			<h3>{{ board.players[board.turn % board.players|length].name }}'s turn</h3>
 
 			{% for tile in board.tiles %}
 				{% if loop.index0 % width == 0 %}
-					<br class='clear' />
+				<br class='clear' />
 				{% endif %}
 				<a href='/play/{{ loop.index0 }}/' class='tiles val{{ tile.value }}'>{{ tile.value }}</a>
 			{% endfor %}
 		</div>
 		<div class='span1'>
-			<h4>Player 1: {{ board.players[0].points }}</h4>
-			<h4>Player 2: {{ board.players[1].points }}</h4>
+			<h4>Player 1: {{ board.players[0].score }}</h4>
+			<h4>Player 2: {{ board.players[1].score }}</h4>
 		</div>
 	</div>
 	<div 
