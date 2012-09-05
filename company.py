@@ -1,9 +1,4 @@
-# 00,01,02,03,
-# 04,05,06,07,
-# 08,09,10,11
-# 12,13,14,15
-
-import json
+import json, uuid
 
 def uniqify(seq):
     seen = set()
@@ -23,7 +18,8 @@ class Board():
 		self.height = height
 		self.total_tiles = self.width * self.height
 		self.turn = 0
-
+		self.id = uuid.uuid4()
+		
 		for i in range(self.total_tiles):
 			graph = []
 			
@@ -52,19 +48,8 @@ class Board():
 				'graph': json.dumps(graph),
 			})
 
-	def print_board(self):
-		response = "\r\nBoard:\r\n"
-		for (counter, each) in enumerate(self.tiles):
-			response += "%s " % each['value']
-			if (counter + 1) % self.width == 0:
-				response += "\r\n"
-		print(response)
-		if len(self.players) > 1:
-			print("%s: %s points | %s: %s points" % 
-				(self.players[0].name, self.players[0].points, self.players[1].name, self.players[1].points))
-
 	def play_tile(self, tile, player, increment=False, time_through=1):
-		print("Play_tile")
+
 		time_through = time_through
 
 		# Tile already has a value and it's not because of a match
@@ -73,7 +58,6 @@ class Board():
 
 		if time_through is 1:
 			self.increment(tile)
-			print("Just incremented")
 		nodes = self.get_nodes(tile, [], True)
 
 		if len(nodes) > 2:
@@ -86,7 +70,6 @@ class Board():
 					self.set_value(nodes[i], 0)
 			time_through += 1
 			self.play_tile(nodes[0], player, True, time_through)
-
 		return True
 
 	def get_nodes(self, current, nodes, first):
@@ -114,7 +97,7 @@ class Board():
 		self.tiles[tile]['value'] = value
 
 	def serialize_board(self):
-		#json_board = json.loads('%s' % self.tiles)
+		#json_board = json.loads(self.tiles)
 		print("%s" % self.tiles)
 		#print(json.loads(json_board))
 
