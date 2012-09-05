@@ -8,7 +8,7 @@
 <body>
 <div class='container'>
 	<div class='row'>
-		<div class='span4'>
+		<div class='span3'>
 			{% if board.turn % 2 == 1 %}
 				<h3>Player 1's turn</h3>
 			{% else %}
@@ -19,10 +19,10 @@
 				{% if loop.index0 % width == 0 %}
 					<br class='clear' />
 				{% endif %}
-				<a href='/play/{{ loop.index0 }}/' class='tiles'>{{ tile.value }}</a>
+				<a href='/play/{{ loop.index0 }}/' class='tiles val{{ tile.value }}'>{{ tile.value }}</a>
 			{% endfor %}
 		</div>
-		<div class='span4'>
+		<div class='span1'>
 			<h4>Player 1: {{ board.players[0].points }}</h4>
 			<h4>Player 2: {{ board.players[1].points }}</h4>
 		</div>

@@ -14,7 +14,7 @@ class Board():
 	
 	tiles = []
 
-	def __init__(self, players=False, width=5, height=5):
+	def __init__(self, players=False, width=3, height=3):
 		if not players:
 			players = {"players": [Player('Player 1'), Player('Player 2')]} 
 		else: 
@@ -26,18 +26,31 @@ class Board():
 
 		for i in range(self.total_tiles):
 			graph = []
-			if (i + 1) < (self.total_tiles - 1):
-				graph.append(i + 1)
-			if (i - 1) >= 0:
-				graph.append(i - 1)
-			if (i + width) < (self.total_tiles - 1):
-				graph.append(i + width)
-			if (i - width) >= 0:
-				graph.append(i - width)
+			
+			# Current tile isnt in the leftmost column
+			if (i % self.width) is not 0:
+				#Add the tile to the left
+				graph.append(i-1)
+			
+			# Current tile isn't in the rightmost column
+			if (i % self.width) is not (self.width - 1):
+				#Add the tile to the right
+				graph.append(i+1)
+
+			# Current tile isn't in first row
+			if i >= width:
+				#Add the tile above
+				graph.append(i - self.width)
+
+			# Current tile isn't in the last row
+			if i < (self.total_tiles - width):
+				#Add the tile below
+				graph.append(i + self.width)
+
 			self.tiles.append({ 
 				'value': 0,
-				'graph': graph,
-			})	
+				'graph': json.dumps(graph),
+			})
 
 	def print_board(self):
 		response = "\r\nBoard:\r\n"
@@ -50,23 +63,49 @@ class Board():
 			print("%s: %s points | %s: %s points" % 
 				(self.players[0].name, self.players[0].points, self.players[1].name, self.players[1].points))
 
-	def serialize_board(self):
-		#json_board = json.loads('%s' % self.tiles)
-		print("%s" % self.tiles)
-		#print(json.loads(json_board))
+	def play_tile(self, tile, player, increment=False, time_through=1):
+		print("Play_tile")
+		time_through = time_through
 
-	def get_nodes(self, current, nodes=[]):
+		# Tile already has a value and it's not because of a match
+		if int(self.tiles[tile]['value']) is not 0 and increment is False:
+			return False
+
+		if time_through is 1:
+			self.increment(tile)
+			print("Just incremented")
+		nodes = self.get_nodes(tile, [], True)
+
+		if len(nodes) > 2:
+			self.players[self.turn % 2].points += (len(nodes) * self.get_value(nodes[0]))
+			for i in range(len(nodes)):
+				if i == 0:
+					self.increment(nodes[i])
+					time_through = 1
+				else:
+					self.set_value(nodes[i], 0)
+			time_through += 1
+			self.play_tile(nodes[0], player, True, time_through)
+
+		return True
+
+	def get_nodes(self, current, nodes, first):
+		
 		nodes = nodes + [current]
-		for each in self.tiles[current]['graph']:
+
+		graph = json.loads(self.tiles[current]['graph'])
+
+		for each in graph:
 			if each not in nodes:
 				if self.get_value(each) == self.get_value(current):
- 					newpath = self.get_nodes(each, nodes)
-					if newpath: nodes = nodes + newpath
-		return uniqify(nodes)
+ 					newpath = self.get_nodes(each, nodes, False)
+					if newpath: 
+						nodes = nodes + newpath
+		nodes = uniqify(nodes)
+		return nodes
 
 	def increment(self, tile):
 		self.tiles[tile]['value'] += 1
-		print("Increment %s" % self.tiles[tile]['value'])
 
 	def get_value(self, tile):
 		return self.tiles[int(tile)]['value']
@@ -74,33 +113,10 @@ class Board():
 	def set_value(self, tile, value):
 		self.tiles[tile]['value'] = value
 
-	def play_tile(self, tile, player, increment=False):
-		if self.get_value(tile) > 0 and increment:
-			print("That tile is occupied.")
-			return False
-
-		if increment:
-			self.increment(tile)
-		nodes = self.get_nodes(tile)
-		if len(nodes) > 2:
-			self.players[self.turn % 2].points += (len(nodes) * self.get_value(nodes[0]))
-			if increment:
-				print("Played tile %s" % tile)
-			for i in range(len(nodes)):
-				if i == 0:
-					self.increment(nodes[i])
-				else:
-					self.set_value(nodes[i], 0)
-			self.play_tile(nodes[0], player, False)
-		else:
-			if increment:
-				print("Played tile %s" % tile)
-		if increment:
-			self.print_board()
-			self.serialize_board()
-
-		print("Turn: %s" % self.turn)
-		return True
+	def serialize_board(self):
+		#json_board = json.loads('%s' % self.tiles)
+		print("%s" % self.tiles)
+		#print(json.loads(json_board))
 
 class Tile():
 	

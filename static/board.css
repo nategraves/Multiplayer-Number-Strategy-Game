@@ -3,13 +3,41 @@
 	height: 50px;
 	text-align: center;
 	line-height: 50px;
-	background: #13DAEC;
 	margin: 0 7px 7px 0;
 	float: left;
 	color: #FFF;
-	text-shadow: 0px 1px 1px #02C1DB;
 	font-size: 24px;
 	display: block;
+}
+
+.val0 {
+	background: #13DAEC;
+	text-shadow: 0px 1px 1px #02C1DB;
+}
+
+.val1 {
+	background: #CAE11E;	
+	text-shadow: 0px 1px 1px #B1D00D;
+}
+
+.val2 {
+	background: #BE41A1;	
+	text-shadow: 0px 1px 1px #AD3090;
+}
+
+.val3 {
+	background: #D4852B;	
+	text-shadow: 0px 1px 1px #C3741A;
+}
+
+.val4 {
+	background: #C23D55;	
+	text-shadow: 0px 1px 1px #B12C44;
+}
+
+.val5 {
+	background: #9C6863;	
+	text-shadow: 0px 1px 1px #8B5752;
 }
 
 .clear {
