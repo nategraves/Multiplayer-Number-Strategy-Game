@@ -23,37 +23,41 @@ class Board():
 		self.id = "%s" % uuid.uuid4()
 		self.last_played = None
 
-		for i in range(self.total_tiles):
-			graph = []
-			
-			# Current tile isnt in the leftmost column
-			if (i % self.width) is not 0:
-				#Add the tile to the left
-				graph.append(i-1)
-			
-			# Current tile isn't in the rightmost column
-			if (i % self.width) is not (self.width - 1):
-				#Add the tile to the right
-				graph.append(i+1)
+		if len(self.tiles) is 0:
+			for i in range(self.total_tiles):
+				graph = []
+				
+				# Current tile isnt in the leftmost column
+				if (i % self.width) is not 0:
+					#Add the tile to the left
+					graph.append(i-1)
+				
+				# Current tile isn't in the rightmost column
+				if (i % self.width) is not (self.width - 1):
+					#Add the tile to the right
+					graph.append(i+1)
 
-			# Current tile isn't in first row
-			if i >= self.width:
-				#Add the tile above
-				graph.append(i - self.width)
+				# Current tile isn't in first row
+				if i >= self.width:
+					#Add the tile above
+					graph.append(i - self.width)
 
-			# Current tile isn't in the last row
-			if i < (self.total_tiles - self.width):
-				#Add the tile below
-				graph.append(i + self.width)
+				# Current tile isn't in the last row
+				if i < (self.total_tiles - self.width):
+					#Add the tile below
+					graph.append(i + self.width)
 
-			self.tiles.append({ 
-				"value": 0,
-				"graph": graph,
-			})
+				# Append the graph and initial value
+				self.tiles.append({ 
+					"value": 0,
+					"graph": graph,
+				})
 
 	def play_tile(self, tile, player, increment=False, time_through=1):
 
+		# Make sure some local vars are good to go
 		time_through = time_through
+		tile = int(tile)
 
 		# Tile already has a value and it's not because of a match
 		if int(self.tiles[tile]["value"]) is not 0 and increment is False:
@@ -80,7 +84,7 @@ class Board():
 		
 		nodes = nodes + [current]
 
-		graph = json.loads(self.tiles[current]["graph"])
+		graph = self.tiles[current]["graph"]
 
 		for each in graph:
 			if each not in nodes:
@@ -123,5 +127,5 @@ class Player():
 		if name:
 			self.name = name
 		else:
-			self.name = raw_input("Enter this player's name: \r\n")
+			self.name = "Player"
 

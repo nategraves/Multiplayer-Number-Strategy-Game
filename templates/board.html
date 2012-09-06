@@ -11,17 +11,17 @@
 		<div class='span{{ board.width }}'>
 			{% if last_played %}<span>Last tile played: {{ board.last_tile }}</span>{% endif %}
 			<h3>{{ board.players[board.turn % board.players|length].name }}'s turn</h3>
-
+			{% if error == 1 %}<h4>You can only play unoccupied (i.e. "0") tiles.</h4>{% endif %}
 			{% for tile in board.tiles %}
 				{% if loop.index0 % width == 0 %}
 				<br class='clear' />
 				{% endif %}
-				<a href='/play/{{ loop.index0 }}/' class='tiles val{{ tile.value }}'>{{ tile.value }}</a>
+				<a href='/play/{{ id }}/{{ loop.index0 }}/' class='tiles val{{ tile.value }}'>{{ tile.value }}</a>
 			{% endfor %}
 		</div>
 		<div class='span1'>
-			<h4>Player 1: {{ board.players[0].score }}</h4>
-			<h4>Player 2: {{ board.players[1].score }}</h4>
+			<h4>{{ board.players[0].name }}: {{ board.players[0].score }}</h4>
+			<h4>{{ board.players[1].name }}: {{ board.players[1].score }}</h4>
 		</div>
 	</div>
 	<div 
