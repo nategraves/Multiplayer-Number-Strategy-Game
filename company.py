@@ -1,4 +1,4 @@
-import json, uuid
+import json, uuid, jsonpickle
 
 def uniqify(seq):
     seen = set()
