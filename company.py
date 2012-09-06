@@ -100,7 +100,7 @@ class Board():
 	def set_value(self, tile, value):
 		self.tiles[tile]["value"] = value
 
-	def serialize_board(self):
+	def serialize(self):
 		players = []
 		for each in self.players:
 			players.append({"name": each.name, "score": each.score}) 

@@ -1,6 +1,5 @@
-drop table if exists games;
+drop table if exists tritina;
 create table games (
   id integer primary key autoincrement,
   board string not null,
-  text string not null
 );
