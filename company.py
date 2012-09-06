@@ -7,8 +7,6 @@ def uniqify(seq):
 
 class Board():
 	
-	tiles = []
-
 	def __init__(self, players=False, width=3, height=3):
 
 		if players:
@@ -20,8 +18,8 @@ class Board():
 		self.height = int(height)
 		self.total_tiles = self.width * self.height
 		self.turn = 0
-		self.id = "%s" % uuid.uuid4()
 		self.last_played = None
+		self.tiles = []
 
 		if len(self.tiles) is 0:
 			for i in range(self.total_tiles):

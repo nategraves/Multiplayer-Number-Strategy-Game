@@ -1,30 +1,29 @@
-<!DOCTYPE>
-<html>
-<head>
-<link href="{{ url_for('static', filename='bootstrap/css/bootstrap.css') }}" rel='stylesheet'>
-<link href="{{ url_for('static', filename='style.css') }}" rel='stylesheet'>
+{% extends 'base.html' %}
+
+{% block extra_css %}
 <link href="{{ url_for('static', filename='board.css') }}" rel='stylesheet'>
-</head>
-<body>
-<div class='container'>
-	<div class='row'>
-		<div class='span{{ board.width }}'>
-			{% if last_played %}<span>Last tile played: {{ board.last_tile }}</span>{% endif %}
-			<h3>{{ board.players[board.turn % board.players|length].name }}'s turn</h3>
-			{% if error == 1 %}<h4>You can only play unoccupied (i.e. "0") tiles.</h4>{% endif %}
-			{% for tile in board.tiles %}
-				{% if loop.index0 % width == 0 %}
-				<br class='clear' />
-				{% endif %}
-				<a href='/play/{{ id }}/{{ loop.index0 }}/' class='tiles val{{ tile.value }}'>{{ tile.value }}</a>
-			{% endfor %}
-		</div>
-		<div class='span1'>
-			<h4>{{ board.players[0].name }}: {{ board.players[0].score }}</h4>
-			<h4>{{ board.players[1].name }}: {{ board.players[1].score }}</h4>
-		</div>
+{% endblock %}
+
+{% block body %}
+<div class='row'>
+	<div class='span{{ board.width }}'>
+		{% if last_played %}<span>Last tile played: {{ board.last_tile }}</span>{% endif %}
+		<h3>{{ board.players[board.turn % board.players|length].name }}'s turn</h3>
+		{% if error == 1 %}<h4>You can only play unoccupied (i.e. "0") tiles.</h4>{% endif %}
+		{% for tile in board.tiles %}
+			{% if loop.index0 % width == 0 %}
+			<br class='clear' />
+			{% endif %}
+			<a href='/play/{{ id }}/{{ loop.index0 }}/' class='tiles val{{ tile.value }}'>{{ tile.value }}</a>
+		{% endfor %}
 	</div>
-	<div 
+	<div class='span1'>
+		<p><b>{{ board.players[0].name }}:</b> {{ board.players[0].score }}</p>
+		<p><b>{{ board.players[1].name }}:</b> {{ board.players[1].score }}</p>
+	</div>
+	<div class='span3'>
+		<h4>How to play:</h4>
+		<p>The object of the game is to collect points by completing series of 3 or more touching tiles (diagonals don't count). Click on a "0" tile to bump it to a one. String three or more "1" tiles together and you'll bump the completing tile to a "2" and reset the other tiles. Keep going until the board is full.</p>
+	</div>
 </div>
-</body>
-</html>
+{% endblock %}

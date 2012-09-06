@@ -43,11 +43,10 @@ def teardown_request(exception):
 @app.route('/', methods=['POST', 'GET'])
 def index():
 	if request.method == 'POST':
-		try: 
+		try:
+			board = None
 			player1 = Player(request.form['player1'])
 			player2 = Player(request.form['player2'])
-			print(player1.name)
-			print(player2.name)
 			players = [player1, player2]
 			board = Board(players, request.form['width'], request.form['width'])
 			json_board = jsonpickle.encode(board)
@@ -66,6 +65,7 @@ def board(board_id, error):
 		# Get the board from the DB, decode it, pass it to the template
 		response = query_db('select * from games where id=%s' % board_id)
 		board = jsonpickle.decode(response[0]["board"])
+		print(board.tiles)
 		return render_template('board.html', width=board.width, height=board.height, board=board, id=response[0]["id"], error=error)
 
 @app.route('/play/<int:board_id>/<int:tile>/', methods=['POST', 'GET'])
