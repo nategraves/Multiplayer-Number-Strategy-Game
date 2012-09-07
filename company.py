@@ -5,9 +5,9 @@ def uniqify(seq):
     seen_add = seen.add
     return [ x for x in seq if x not in seen and not seen_add(x)]
 
-class Board():
+class Board(object):
 	
-	def __init__(self, players=False, width=3, height=3):
+	def __init__(self, players=None, width=3, height=3):
 
 		if players:
 			self.players = players
@@ -21,47 +21,46 @@ class Board():
 		self.last_played = None
 		self.tiles = []
 
-		if len(self.tiles) is 0:
-			for i in range(self.total_tiles):
-				graph = []
-				
-				# Current tile isnt in the leftmost column
-				if (i % self.width) is not 0:
-					#Add the tile to the left
-					graph.append(i-1)
-				
-				# Current tile isn't in the rightmost column
-				if (i % self.width) is not (self.width - 1):
-					#Add the tile to the right
-					graph.append(i+1)
+		for i in range(self.total_tiles):
+			graph = []
+			
+			# Current tile isnt in the leftmost column
+			if (i % self.width) != 0:
+				#Add the tile to the left
+				graph.append(i-1)
+			
+			# Current tile isn't in the rightmost column
+			if (i % self.width) != (self.width - 1):
+				#Add the tile to the right
+				graph.append(i+1)
 
-				# Current tile isn't in first row
-				if i >= self.width:
-					#Add the tile above
-					graph.append(i - self.width)
+			# Current tile isn't in first row
+			if i >= self.width:
+				#Add the tile above
+				graph.append(i - self.width)
 
-				# Current tile isn't in the last row
-				if i < (self.total_tiles - self.width):
-					#Add the tile below
-					graph.append(i + self.width)
+			# Current tile isn't in the last row
+			if i < (self.total_tiles - self.width):
+				#Add the tile below
+				graph.append(i + self.width)
 
-				# Append the graph and initial value
-				self.tiles.append({ 
-					"value": 0,
-					"graph": graph,
-				})
+			# Append the graph and initial value
+			self.tiles.append({ 
+				"value": 0,
+				"graph": graph,
+			})
 
 	def play_tile(self, tile, player, increment=False, time_through=1):
 
 		# Make sure some local vars are good to go
 		time_through = time_through
-		tile = int(tile)
+		tile = tile
 
 		# Tile already has a value and it's not because of a match
-		if int(self.tiles[tile]["value"]) is not 0 and increment is False:
-			return False
+		#if self.tiles[tile]["value"] != 9 and increment == False:
+		#	return False
 
-		if time_through is 1:
+		if time_through == 1:
 			self.last_played = tile
 			self.increment(tile)
 		nodes = self.get_nodes(tile, [], True)
@@ -109,16 +108,7 @@ class Board():
 		board = json.dumps({ "id":self.id, "players":players, "tiles":self.tiles, "turn":self.turn })
 		return board
 
-class Tile():
-	
-	def __init__(self, id):
-		self.value = 0
-		self.id = id
-
-	def increment(self):
-		self.value += 1
-
-class Player():
+class Player(object):
 
 	def __init__(self, name=None):
 		self.score = 0

@@ -4,7 +4,7 @@
 	<script>
 		$(function() {
 			$('.tiles').click(function () {
-				var bid = 1;
+				var bid = {{ id }};
 				$.post('/play/', {board_id: bid, tile: $(this).attr('id')}, function (data) {
 					var board = JSON.parse(data);
 					for ( i=0; i < board.tiles.length; i++ ) {
@@ -22,17 +22,16 @@
 			});
 
 			var heartbeat = function () {
-				console.log("Polling....");
-				var bid = 1;
+				var bid = {{ id }};
 				$.post('/poll/', { board_id: bid }, function (data) {
 
 					var board = JSON.parse(data);
 					for ( i=0; i < board.tiles.length; i++ ) {
-						if ($("#" + i).text() !== board.tiles[i].value) {
-							//$("#" + i).attr("class", "changed");
+						if (parseInt($("#" + i).text()) !== parseInt(board.tiles[i].value)) {
 							var new_class = 'tiles val' + board.tiles[i].value;
 							$("#" + i).attr('class', new_class);
-							break;
+							$("#" + i).text(board.tiles[i].value);
+							$("#turn").text(board.players[board.turn % board.players.length].name + "'s turn.");
 						}
 					}
 					/*$.animate({opacity:"100%"}, 'normal', function() {
@@ -46,7 +45,7 @@
 					setTimeout(function() {heartbeat();},1500);
 				});
 			};
-			//heartbeat();
+			heartbeat();
 		});
 	</script>
 {% endblock %}
