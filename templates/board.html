@@ -1,5 +1,28 @@
 {% extends 'base.html' %}
 
+{% block extra_js %}
+<script>
+	$(function() {
+		$('.tiles').click(function() {
+			$.post('/play/', {board_id: {{ id }}, tile: $(this).attr('id')}, function(data) {
+				var board = JSON.parse(data);
+				for ( i=0; i < board.tiles.length; i++ ) {
+					var new_class = 'tiles val' + board.tiles[i].value;
+					$("#" + i).text(board.tiles[i].value);
+					$("#" + i).attr('class', new_class);
+				}
+				for ( j=0; j < board.players.length; j++ ) {
+					$('.name:eq(' + j +')').text(board.players[j].name);
+					$('.score:eq(' + j +')').text(board.players[j].score);
+				}
+				var turn_text = board.players[board.turn % board.players.length].name + "'s turn.";
+				$('#turn').text(turn_text);
+			})
+		});
+	});
+</script>
+{% endblock %}
+
 {% block extra_css %}
 <link href="{{ url_for('static', filename='board.css') }}" rel='stylesheet'>
 {% endblock %}
@@ -8,18 +31,18 @@
 <div class='row'>
 	<div class='span{{ board.width }}'>
 		{% if last_played %}<span>Last tile played: {{ board.last_tile }}</span>{% endif %}
-		<h3>{{ board.players[board.turn % board.players|length].name }}'s turn</h3>
+		<h3 id='turn'>{{ board.players[board.turn % board.players|length].name }}'s turn</h3>
 		{% if error == 1 %}<h4>You can only play unoccupied (i.e. "0") tiles.</h4>{% endif %}
 		{% for tile in board.tiles %}
 			{% if loop.index0 % width == 0 %}
 			<br class='clear' />
 			{% endif %}
-			<a href='/play/{{ id }}/{{ loop.index0 }}/' class='tiles val{{ tile.value }}'>{{ tile.value }}</a>
+			<a href='#' id='{{ loop.index0 }}' class='tiles val{{ tile.value }}'>{{ tile.value }}</a>
 		{% endfor %}
 	</div>
 	<div class='span1'>
-		<p><b>{{ board.players[0].name }}:</b> {{ board.players[0].score }}</p>
-		<p><b>{{ board.players[1].name }}:</b> {{ board.players[1].score }}</p>
+		<p><b class='name'>{{ board.players[0].name }}:</b> <span class='score'>{{ board.players[0].score }}</span></p>
+		<p><b class='name'>{{ board.players[1].name }}:</b> <span class='score'>{{ board.players[1].score }}</span></p>
 	</div>
 	<div class='span3'>
 		<h4>How to play:</h4>

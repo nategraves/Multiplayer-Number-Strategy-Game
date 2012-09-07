@@ -68,33 +68,35 @@ def board(board_id, error):
 		print(board.tiles)
 		return render_template('board.html', width=board.width, height=board.height, board=board, id=response[0]["id"], error=error)
 
-@app.route('/play/<int:board_id>/<int:tile>/', methods=['POST', 'GET'])
-def play(board_id, tile):
+@app.route('/play/', methods=['POST', 'GET'])
+def play():
 
-	# Make a local var for board_id
-	bid = int(board_id)
+	if request.method == 'POST':
+		# Make a local var for board_id
+		bid = int(request.form['board_id'])
+		tile = int(request.form['tile'])
 
-	if board_id is not None and tile is not None:
+		if bid is not None and tile is not None:
 
-		# Get the board, decode it, increment the turn, play the tile
-		response = query_db('select * from games where id=%s' % board_id)
-		board = jsonpickle.decode(response[0]["board"])
-		played = board.play_tile(int(tile), board.players[board.turn % len(board.players)])
-		
-		# Check to make sure the play was a success
-		if played: 
+			# Get the board, decode it, increment the turn, play the tile
+			response = query_db('select * from games where id=%s' % bid)
+			board = jsonpickle.decode(response[0]["board"])
+			played = board.play_tile(int(tile), board.players[board.turn % len(board.players)])
 			board.turn += 1
-			error = 0
-		else: 
-			error = 1
 
-		# Re-encode the updated board
-		json_board = jsonpickle.encode(board)
-		g.db.execute('update games set board = ? where id = ?', [json_board, board_id])
-		g.db.commit()
+			# Check to make sure the play was a success
+			if played: 
+				error = 0
+			else: 
+				error = 1
 
-		#Send the user back to the board
-		return redirect(url_for('board', board_id=bid, error=error))
+			# Re-encode the updated board
+			json_board = jsonpickle.encode(board)
+			g.db.execute('update games set board = ? where id = ?', [json_board, bid])
+			g.db.commit()
+
+			#Send the user back to the board
+			return json_board
 	return redirect(url_for('index'))
 
 if __name__ == '__main__':
