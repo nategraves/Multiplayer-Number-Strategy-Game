@@ -43,3 +43,7 @@
 .clear {
 	clear: both;
 }
+
+.changed {
+	opacity: 50%;
+}

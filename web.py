@@ -65,7 +65,6 @@ def board(board_id, error):
 		# Get the board from the DB, decode it, pass it to the template
 		response = query_db('select * from games where id=%s' % board_id)
 		board = jsonpickle.decode(response[0]["board"])
-		print(board.tiles)
 		return render_template('board.html', width=board.width, height=board.height, board=board, id=response[0]["id"], error=error)
 
 @app.route('/play/', methods=['POST', 'GET'])
@@ -98,6 +97,16 @@ def play():
 			#Send the user back to the board
 			return json_board
 	return redirect(url_for('index'))
+
+@app.route('/poll/', methods=['POST'])
+def poll():
+
+	# Send back the proper board
+	if request.method == "POST":
+		bid = int(request.form['board_id'])
+		response = query_db('select * from games where id=%s' % bid)
+		return response[0]["board"]
+	return False
 
 if __name__ == '__main__':
 	app.debug = True
