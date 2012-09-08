@@ -40,6 +40,26 @@
 	text-shadow: 0px 1px 1px #8B5752;
 }
 
+.val6 {
+	background: #5D48B7;
+	text-shadow: 0px 1px 1px #4C37A6;
+}
+
+.val7 {
+	background: #1DE296;
+	text-shadow: 0px 1px 1px #0CD175;
+}
+
+.val8 {
+	background: #EC5813;
+	text-shadow: 0px 1px 1px #DB4702;
+}
+
+.val9 { 
+	background: #ECF40B;
+	text-shadow: 0px 1px 1px #DBE30A;
+}
+
 .clear {
 	clear: both;
 }
