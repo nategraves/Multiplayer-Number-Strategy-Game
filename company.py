@@ -57,12 +57,13 @@ class Board(object):
 		tile = tile
 
 		# Tile already has a value and it's not because of a match
-		#if self.tiles[tile]["value"] != 9 and increment == False:
-		#	return False
+		if self.tiles[tile]["value"] >= 9 and increment == False:
+			return False
 
 		if time_through == 1:
 			self.last_played = tile
-			self.increment(tile)
+			if self.tiles[tile].value < 9:
+				self.increment(tile)
 		nodes = self.get_nodes(tile, [], True)
 
 		if len(nodes) > 2:

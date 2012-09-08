@@ -4,6 +4,8 @@ from sqlite3 import dbapi2 as sqlite3
 from contextlib import closing
 from company import *
 from flask import Flask, render_template, redirect, request, jsonify, url_for, g, abort, flash
+#from geventwebsocket.handler import WebSocketHandler
+#from gevent.pywsgi import WSGIServer
 
 
 app = Flask(__name__)
@@ -81,7 +83,8 @@ def play():
 			response = query_db('select * from games where id=%s' % bid)
 			board = jsonpickle.decode(response[0]["board"])
 			played = board.play_tile(int(tile), board.players[board.turn % len(board.players)])
-			board.turn += 1
+			if played: 
+				board.turn += 1
 
 			# Check to make sure the play was a success
 			if played: 
@@ -111,3 +114,5 @@ def poll():
 if __name__ == '__main__':
 	app.debug = True
 	app.run()
+	#http_server = WSGIServer(('', 5000), app, handler_class=WebSocketHandler)
+	#http_server.serve_forever()
