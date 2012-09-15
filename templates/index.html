@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block extra_css %}
+	<link href="{{ url_for('static', filename='index.css') }}" rel="stylesheet">
+{% endblock %}
+
+
+{% block body %}
+<div class='row'>
+	<div class='span4'>
+		<h1>Tritina</h1>
+		<h2>A tricky tile game to play with friends.<h2>
+	</div>
+	<div class='span4 offset1'>
+		<form action='/' method='POST' class='form-vertical'>
+			<fieldset>
+				<div class='control-group'>
+					<label class='control-label' for='player1'>Player 1:</label>
+					<input type='text' class='input-large' name='player1' id='player1'>
+					<br class='clear'/>
+					<label class='control-label' for='player2'>Player 2:</label>
+					<input type='text' class='input-large' name='player2' id='player2'>
+					<br class='clear'/>
+					<label class='control-label' for='width'>Choose your board size:</label>
+					<select name='width'>
+						<option value='3'>3 x 3</option>
+						<option value='4'>4 x 4</option>
+						<option value='5'>5 x 5</option>
+						<option value='6'>6 x 6</option>
+					</select>
+					<input type='submit' class='btn btn-info' value="Start a new game">
+				</div>
+			</fieldset>
+		<form>
+	</div>
+{% endblock %}

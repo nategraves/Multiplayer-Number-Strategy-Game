@@ -1,0 +1,21 @@
+<!doctype html>
+<html>
+<head>
+	<title>{% block title%}Tritina - A tricky, two-player, tile game{% endblock %}</title>
+	
+	<link href="{{ url_for('static', filename='bootstrap/css/bootstrap.css') }}" rel="stylesheet">
+	<link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
+	{% block extra_css %}{% endblock %}
+
+    <script src="{{ url_for('static', filename='jquery-1.7.2.min.js') }}"></script>
+	{% block extra_js %}{% endblock %}
+</head>
+<body>
+	<div class='container'>
+		{% block body %}
+			<div class='row'>	
+				<h1>Welcome to Three's Company, a multiplayer number strategy game.</h1>
+			</div>
+		{% endblock %}
+	</div>
+</body>
