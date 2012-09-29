@@ -3,21 +3,52 @@
 {% block extra_js %}
 	<script>
 		$(function() {
-			$('.tiles').click(function () {
-				var bid = {{ id }};
-				$.post('/play/', {board_id: bid, tile: $(this).attr('id')}, function (data) {
+
+			$('#seehow').click(function() {
+				$('#howto').toggle();
+			});
+			
+			$('#info').css('width', {{ board.width * 62 }} + 'px');
+
+			
+			$('#play-bomb').click(function(){
+				var board_id = {{ id }};
+				var tile = $('#bomb').val();
+				var player = {{ board.turn % board.players|length }};
+				$.post('/bomb/', {board_id: board_id, tile: tile, player: player}, function(data) {
+					console.log(data);
 					var board = JSON.parse(data);
 					for ( i=0; i < board.tiles.length; i++ ) {
-						var new_class = 'tiles val' + board.tiles[i].value;
+						var new_class = 'tile val' + board.tiles[i].value;
 						$("#" + i).text(board.tiles[i].value);
 						$("#" + i).attr('class', new_class);
 					}
 					for ( j=0; j < board.players.length; j++ ) {
-						$('.name:eq(' + j +')').text(board.players[j].name);
+						$('.bombs:eq(' + j +')').text(board.players[j].bombs);
+					}
+					$('.name').removeClass('turn');
+					var current_turn =  board.turn % board.players.length;
+					$('.name:eq(' + current_turn + ')').addClass('turn');
+
+				});
+			});
+			
+			$('.tile').click(function () {
+				var bid = {{ id }};
+				$.post('/play/', {board_id: bid, tile: $(this).attr('id')}, function (data) {
+					var board = JSON.parse(data);
+					for ( i=0; i < board.tiles.length; i++ ) {
+						var new_class = 'tile val' + board.tiles[i].value;
+						$("#" + i).text(board.tiles[i].value);
+						$("#" + i).attr('class', new_class);
+					}
+					for ( j=0; j < board.players.length; j++ ) {
+						$('.name:eq(' + j +')').text(board.players[j].name + ":");
 						$('.score:eq(' + j +')').text(board.players[j].score);
 					}
-					var turn_text = board.players[board.turn % board.players.length].name + "'s turn.";
-					$('#turn').text(turn_text);
+					$('.name').removeClass('turn');
+					var current_turn =  board.turn % board.players.length;
+					$('.name:eq(' + current_turn + ')').addClass('turn');
 				});
 			});
 
@@ -31,12 +62,9 @@
 							var new_class = 'tiles val' + board.tiles[i].value;
 							$("#" + i).attr('class', new_class);
 							$("#" + i).text(board.tiles[i].value);
-							$("#turn").text(board.players[board.turn % board.players.length].name + "'s turn.");
 						}
 					}
-					/*$.animate({opacity:"100%"}, 'normal', function() {
-						$("#" + i).text(board.tiles[i].value);
-					});*/
+
 					for ( j=0; j < board.players.length; j++ ) {
 						if ( $('.score:eq(' + j +')').text() !== board.players[ board.turn % board.players[j].points ]) {
 							$('.score:eq(' + j +')').text(board.players[j].score);
@@ -56,24 +84,40 @@
 
 {% block body %}
 <div class='row'>
-	<div class='span{{ board.width }}'>
-		{% if last_played %}<span>Last tile played: {{ board.last_tile }}</span>{% endif %}
-		<h3 id='turn'>{{ board.players[board.turn % board.players|length].name }}'s turn</h3>
+	<div class='span12'>
 		{% if error == 1 %}<h4>You can only play unoccupied (i.e. "0") tiles.</h4>{% endif %}
-		{% for tile in board.tiles %}
-			{% if loop.index0 % width == 0 %}
-			<br class='clear' />
+		<div id='tiles'>
+			{% for tile in board.tiles %}
+				{% if loop.index0 % width == 0 %}
+				<br class='clear' />
+				{% endif %}
+				<a href='#' id='{{ loop.index0 }}' class='tile val{{ tile.value }}'>{{ tile.value }}</a>
+			{% endfor %}
+		</div>
+	</div>
+</div>
+<div class='row'>
+	<div id='info'>
+		{% for player in board.players %}
+			{% if board.turn % board.players|length == loop.index0 %}
+				<span class='name turn'>{{ player.name }}:</span> 
+				<span class='score'>{{ player.score }}</span> 
+				<span class='bombs'>({{ player.bombs }})</span>
+				<br class='clear'/>
+			{% else %}
+				<span class='name'>{{ player.name }}:</span> 
+				<span class='score'>{{ player.score }}</span> 
+				<span class='bombs'>({{ player.bombs }})</span>
+				<br class='clear'/>
 			{% endif %}
-			<a href='#' id='{{ loop.index0 }}' class='tiles val{{ tile.value }}'>{{ tile.value }}</a>
 		{% endfor %}
+		<a href='#' id='seehow'>See help.</a>
+		<p id='howto'>The object of the game is to collect points by completing series of 3 or more touching tiles (diagonals don't count). Click on a "0" tile to bump it to a one. String three or more "1" tiles together and you'll bump the completing tile to a "2" and reset the other tiles. Keep going until the board is full.</p>
 	</div>
-	<div class='span2'>
-		<p><b class='name'>{{ board.players[0].name }}:</b> <span class='score'>{{ board.players[0].score }}</span></p>
-		<p><b class='name'>{{ board.players[1].name }}:</b> <span class='score'>{{ board.players[1].score }}</span></p>
-	</div>
-	<div class='span3'>
-		<h4>How to play:</h4>
-		<p>The object of the game is to collect points by completing series of 3 or more touching tiles (diagonals don't count). Click on a "0" tile to bump it to a one. String three or more "1" tiles together and you'll bump the completing tile to a "2" and reset the other tiles. Keep going until the board is full.</p>
+	<div class='span3' id="bomb-board">
+		<label for='bomb'>Use a bomb <br>(enter the tile number)</label>
+		<input type='text' id='bomb' class='span1'/><br class='clear'/>
+		<button class='btn' id='play-bomb'>Bomb</button>
 	</div>
 </div>
 {% endblock %}

@@ -1,0 +1,5 @@
+# Requirements for MNSG
+flask
+jsonpickle
+gevent
+SQLAlchemy

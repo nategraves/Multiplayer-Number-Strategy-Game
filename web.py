@@ -50,7 +50,7 @@ def index():
 			player1 = Player(request.form['player1'])
 			player2 = Player(request.form['player2'])
 			players = [player1, player2]
-			board = Board(players, request.form['width'], request.form['width'])
+			board = Board(players, request.form['width'], request.form['height'])
 			json_board = jsonpickle.encode(board)
 			result = g.db.execute('insert into games (board) values (?)', [json_board])
 			g.db.commit()
@@ -58,6 +58,17 @@ def index():
 		except KeyError:
 			return redirect(url_for('index'))
 	return render_template('index.html')
+
+@app.route('/play-alone/')
+def play_alone():
+
+	board = None
+	players = [Player("Player 1"), Player("Computer")]
+	board = Board(players, 4, 4)
+	json_board = jsonpickle.encode(board)
+	result = g.db.execute('insert into games (board) values (?)', [json_board])
+	g.db.commit()
+	return redirect(url_for('board', board_id=result.lastrowid, error=0))
 
 @app.route('/board/<int:board_id>/<int:error>/')
 def board(board_id, error):
@@ -83,14 +94,17 @@ def play():
 			response = query_db('select * from games where id=%s' % bid)
 			board = jsonpickle.decode(response[0]["board"])
 			played = board.play_tile(int(tile), board.players[board.turn % len(board.players)])
-			if played: 
+			if played == 1: 
 				board.turn += 1
 
 			# Check to make sure the play was a success
-			if played: 
+			if played == 0: 
 				error = 0
 			else: 
 				error = 1
+
+			if played == -1:
+				return redirect(url_for('index'))
 
 			# Re-encode the updated board
 			json_board = jsonpickle.encode(board)
@@ -99,6 +113,29 @@ def play():
 
 			#Send the user back to the board
 			return json_board
+	return redirect(url_for('index'))
+
+@app.route('/bomb/', methods=['POST', 'GET'])
+def use_bomb():
+
+	print('bombing')
+	bid = int(request.form['board_id'])
+	tile = int(request.form['tile'])
+	player = int(request.form['player'])
+
+	if bid is not None and tile is not None:
+
+		# Get the board, decode it, increment the turn, play the tile
+		response = query_db('select * from games where id=%s' % bid)
+		board = jsonpickle.decode(response[0]["board"])
+		print('connecting to bombing...')
+		played = board.use_bomb(tile, player)
+		if played:
+			board.turn += 1
+		json_board = jsonpickle.encode(board)
+		g.db.execute('update games set board = ? where id = ?', [json_board, bid])
+		g.db.commit()
+		return json_board
 	return redirect(url_for('index'))
 
 @app.route('/poll/', methods=['POST'])

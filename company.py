@@ -50,6 +50,14 @@ class Board(object):
 				"graph": graph,
 			})
 
+	def use_bomb(self, tile, player):
+		
+		if self.players[player].bombs != 0 and tile <  self.total_tiles - 1:
+			self.players[player].bombs -= 1
+			self.set_value(tile, 0)
+			return True
+		return False
+
 	def play_tile(self, tile, player, increment=False, time_through=1):
 
 		# Make sure some local vars are good to go
@@ -58,12 +66,11 @@ class Board(object):
 
 		# Tile already has a value and it's not because of a match
 		if self.tiles[tile]["value"] >= 9 and increment == False:
-			return False
+			return 0
 
 		if time_through == 1:
 			self.last_played = tile
-			if self.tiles[tile].value < 9:
-				self.increment(tile)
+			self.increment(tile)
 		nodes = self.get_nodes(tile, [], True)
 
 		if len(nodes) > 2:
@@ -76,7 +83,17 @@ class Board(object):
 					self.set_value(nodes[i], 0)
 			time_through += 1
 			self.play_tile(nodes[0], player, True, time_through)
-		return True
+
+		all_played = 0
+		for each in self.tiles:
+			print("Val: %s, Total: %s" % (each["value"], all_played))
+			if each["value"] > 0:
+				all_played += 1
+		if all_played == self.total_tiles and self.tiles[tile]:
+			self.increment(tile)
+			return -1
+		
+		return 1
 
 	def get_nodes(self, current, nodes, first):
 		
@@ -113,6 +130,8 @@ class Player(object):
 
 	def __init__(self, name=None):
 		self.score = 0
+		self.bombs = 3
+
 		if name:
 			self.name = name
 		else:

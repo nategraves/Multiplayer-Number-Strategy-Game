@@ -1,63 +1,86 @@
-.tiles {
-	width: 50px;
-	height: 50px;
+@font-face {
+  font-family: 'Spinnaker';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Spinnaker'), local('Spinnaker-Regular'), url(http://themes.googleusercontent.com/static/fonts/spinnaker/v5/WxzDAY6mC9v3znSJEtCoW7O3LdcAZYWl9Si6vvxL-qU.woff) format('woff');
+}
+
+body {
+	/*background-color: url("/static/bg.png") repeat #EEE;*/
+	background-color: #DDDDDD url('/static/cardboard_flat.png');
+}
+
+#tiles {
+	padding: 10px 0;
+}
+
+.tile {
+	width: 60px;
+	height: 60px;
+	font-size: 40px;
 	text-align: center;
-	line-height: 50px;
+	border-radius: 4px;
+	line-height: 60px;
 	margin: 0 7px 7px 0;
 	float: left;
 	color: #FFF;
-	font-size: 24px;
+	font-family: 'Spinnaker', sans-serif;
+	text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.2), -1px -1px 1px rgba(0, 0, 0, 0.2);
+	background-image: linear-gradient(top, rgba(255,255,255,.3), rgba(255,255,255,0)), url('/static/button_bg.png');
+	background-image: -webkit-linear-gradient(top, rgba(255,255,255,.3), rgba(255,255,255,0)), url('/static/button_bg.png');        
+	box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7), inset 2px 0 1px rgba(255, 255, 255, 0.4), inset 0 2px 0px rgba(255, 255, 255, 0.5), inset -1px -2px 0px rgba(0, 0, 0, 0.2);
 	display: block;
+	transition: background-color .2s ease-out;
 }
 
 .val0 {
-	background: #13DAEC;
-	text-shadow: 0px 1px 1px #02C1DB;
+	background-color: #13DAEC;
+	border-color: 0px 1px 1px #02C1DB;
 }
 
 .val1 {
-	background: #CAE11E;	
-	text-shadow: 0px 1px 1px #B1D00D;
+	background-color: #CAE11E;	
+	border-color: 0px 1px 1px #B1D00D;
 }
 
 .val2 {
-	background: #BE41A1;	
-	text-shadow: 0px 1px 1px #AD3090;
+	background-color: #BE41A1;	
+	border-color: 0px 1px 1px #AD3090;
 }
 
 .val3 {
-	background: #D4852B;	
-	text-shadow: 0px 1px 1px #C3741A;
+	background-color: #D4852B;	
+	border-color: 0px 1px 1px #C3741A;
 }
 
 .val4 {
-	background: #C23D55;	
-	text-shadow: 0px 1px 1px #B12C44;
+	background-color: #C23D55;	
+	border-color: 0px 1px 1px #B12C44;
 }
 
 .val5 {
-	background: #9C6863;	
-	text-shadow: 0px 1px 1px #8B5752;
+	background-color: #9C6863;	
+	border-color: 0px 1px 1px #8B5752;
 }
 
 .val6 {
-	background: #5D48B7;
-	text-shadow: 0px 1px 1px #4C37A6;
+	background-color: #5D48B7;
+	border-color: 0px 1px 1px #4C37A6;
 }
 
 .val7 {
-	background: #1DE296;
-	text-shadow: 0px 1px 1px #0CD175;
+	background-color: #1DE296;
+	border-color: 0px 1px 1px #0CD175;
 }
 
 .val8 {
-	background: #EC5813;
-	text-shadow: 0px 1px 1px #DB4702;
+	background-color: #EC5813;
+	border-color: 0px 1px 1px #DB4702;
 }
 
 .val9 { 
-	background: #ECF40B;
-	text-shadow: 0px 1px 1px #DBE30A;
+	background-color: #ECF40B;
+	border-color: 0px 1px 1px #DBE30A;
 }
 
 .clear {
@@ -66,4 +89,48 @@
 
 .changed {
 	opacity: 50%;
+}
+
+#seehow {
+	padding: 9px 4px 2px;
+	font-size: 12px;
+	display: block;
+}
+
+#howto {
+	display: none;
+}
+
+#info {
+	/*width: 309px;*/
+	border-top: 1px solid #CDCDCD;
+	margin-left: 20px;
+	float: left;
+	background-color: #EFEFEF;
+	padding: 10px;
+}
+
+.name, .score, .bombs {
+	display: block;
+	float: left;
+	font-size: 16px;
+	padding: 2px 4px;
+}
+
+.name {
+	width: 120px;
+}
+
+.score {
+	margin-left: 10px;
+}
+
+.turn {
+	background-color: #13DAEC;
+	color: #FFF;
+	text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.2), -1px -1px 1px rgba(0, 0, 0, 0.2);
+}
+
+#bomb-board {
+	padding: 15px;
 }
