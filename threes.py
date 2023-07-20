@@ -1,31 +1,34 @@
 import sys
-from company import Board, Tile, Player
+from company import Board, Player
+
 
 def main():
-	players = [Player(), Player()]
-	try: 
-		width = int(raw_input("How wide of a board would you like?\r\n"))
-	except ValueError:
-		print "Please enter a valid number"
-	try: 
-		height = int(raw_input("How tall of a board would you like?\r\n"))
-	except ValueError:
-		print "Please enter a valid number"
-	board = Board(players, width, height)
-	board.print_board()
-	turn = 0
-	game = True
-	while turn < 50:
-		played = False
-		while not played:
-			try:
-				tile = int(raw_input("What tile do you want to play, %s (0-%s)?\r\n" % (board.players[turn % 2].name, board.total_tiles)))
-				played = board.play_tile(tile, board.players[turn % 2], True)
-			except ValueError:
-				print "Please enter a valid number"
-		turn += 1
-	print("Game over!")
-	sys.exit()
+    players = [Player(), Player()]
+    try:
+        width = int(input("How wide of a board would you like?\r\n"))
+    except ValueError:
+        print("Please enter a valid number")
+    try:
+        height = int(input("How tall of a board would you like?\r\n"))
+    except ValueError:
+        print("Please enter a valid number")
+    board = Board(players, width, height)
+    board.print_board()
+    turn = 0
+    game = True
+    while turn < 50:
+        played = False
+        while not played:
+            try:
+                tile = int(input("What tile do you want to play, %s (0-%s)?\r\n" %
+                           (board.players[turn % 2].name, board.total_tiles)))
+                played = board.play_tile(tile, board.players[turn % 2], True)
+            except ValueError:
+                print("Please enter a valid number")
+        turn += 1
+    print("Game over!")
+    sys.exit()
+
 
 main()
 
