@@ -1,0 +1,154 @@
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.board-container {
+  flex: 2;
+}
+
+.board {
+  display: grid;
+  gap: 5px;
+  width: fit-content;
+}
+
+.span3 .board {
+  grid-template-columns: repeat(3, 80px);
+}
+
+.span4 .board {
+  grid-template-columns: repeat(4, 80px);
+}
+
+.span5 .board {
+  grid-template-columns: repeat(5, 80px);
+}
+
+.span6 .board {
+  grid-template-columns: repeat(6, 80px);
+}
+
+.tiles {
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background-color: #fff;
+  outline: none;
+}
+
+.tiles:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.tiles.val0 {
+  background-color: #f0f0f0;
+  color: #999;
+}
+
+.tiles.val1 {
+  background-color: #e3f2fd;
+  color: #1976d2;
+}
+
+.tiles.val2 {
+  background-color: #fff9c4;
+  color: #f57f17;
+}
+
+.tiles.val3 {
+  background-color: #ffccbc;
+  color: #d84315;
+}
+
+.tiles.val4 {
+  background-color: #f8bbd0;
+  color: #c2185b;
+}
+
+.tiles.val5 {
+  background-color: #e1bee7;
+  color: #7b1fa2;
+}
+
+.tiles.val6 {
+  background-color: #d1c4e9;
+  color: #512da8;
+}
+
+.tiles.val7 {
+  background-color: #c5cae9;
+  color: #303f9f;
+}
+
+.tiles.val8 {
+  background-color: #bbdefb;
+  color: #1976d2;
+}
+
+.tiles.val9 {
+  background-color: #b2dfdb;
+  color: #00796b;
+}
+
+.scoreboard {
+  flex: 1;
+  min-width: 200px;
+}
+
+.scoreboard p {
+  font-size: 18px;
+  margin: 10px 0;
+}
+
+.scoreboard .name {
+  font-weight: bold;
+}
+
+.scoreboard .score {
+  font-size: 20px;
+  color: #1976d2;
+}
+
+.instructions {
+  flex: 1;
+  min-width: 250px;
+}
+
+.instructions h4 {
+  margin-top: 0;
+  color: #333;
+}
+
+.instructions p {
+  line-height: 1.6;
+  color: #666;
+}
+
+.error {
+  color: #d32f2f;
+  margin: 10px 0;
+}
+
+#turn {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 15px;
+}
