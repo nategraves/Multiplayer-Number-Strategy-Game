@@ -105,13 +105,11 @@ export class Board {
       for (let i = 0; i < nodes.length; i++) {
         if (i === 0) {
           this.increment(nodes[i]);
-          timeThrough = 1;
         } else {
           this.setValue(nodes[i], 0);
         }
       }
-      timeThrough += 1;
-      this.playTile(nodes[0], player, true, timeThrough);
+      this.playTile(nodes[0], player, true, timeThrough + 1);
     }
     return true;
   }
